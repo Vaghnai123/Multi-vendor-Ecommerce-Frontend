@@ -56,7 +56,7 @@ const Products = ({ title }) => {
                                             
                                             <img
                                                 className='w-full h-full object-contain transition-transform duration-300' 
-                                                src={`/public/images/products/${pl}.webp`}
+                                                src={`/images/products/${pl}.webp`}
                                                 alt=""/>
                                         </div>
                                         
