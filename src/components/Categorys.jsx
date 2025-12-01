@@ -51,7 +51,7 @@ const Categorys = () => {
 
                             <div className='w-full h-full relative p-2 flex flex-col justify-end items-center'>
                                 <img 
-                                    src={`/public/images/products/${i + 1}.webp`} 
+                                    src={`/images/products/${i + 1}.webp`} 
                                     alt={c} 
                                     className='w-full h-[80%] object-contain mb-2' />
 
