@@ -46,7 +46,6 @@ const Products = ({ title }) => {
                 </div>
             </div>
 
-            {/* Slider Content */}
             <div className="overflow-hidden w-full relative">
                 <div
                     className="flex transition-transform duration-500 ease-in-out w-full"
