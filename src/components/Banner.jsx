@@ -34,7 +34,7 @@ const Banner = () => {
                             {images.map((img, index) => (
                                 <SwiperSlide key={index}>
                                     <Link to="#">
-                                        <img className="w-full h-full object-cover" src={`/public/images/banner/${img}.jpg`} alt="" />
+                                        <img className="w-full h-full object-cover" src={`/images/banner/${img}.jpg`} alt="" />
                                     </Link>
                                 </SwiperSlide>
                                 ))

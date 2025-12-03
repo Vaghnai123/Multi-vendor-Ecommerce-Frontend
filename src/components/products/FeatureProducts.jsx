@@ -36,7 +36,7 @@ const FeatureProducts = () => {
                                 {/* Product Image */}
                                 <img 
                                     className='w-full h-60 object-contain bg-gray-50 transition-transform duration-500 group-hover:scale-105 p-3' 
-                                    src={`/public/images/products/${i + 1}.webp`} 
+                                    src={`/images/products/${i + 1}.webp`} 
                                     alt="Product"
                                 /> 
 
