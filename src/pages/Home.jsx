@@ -4,6 +4,7 @@ import Banner from '../components/Banner';
 import Categorys from '../components/Categorys';
 import FeatureProducts from '../components/products/FeatureProducts';
 import Products from '../components/products/Products';
+import Footer from '../components/Footer';
 
 const Home = () => {
     return (
@@ -11,12 +12,12 @@ const Home = () => {
             <Header/>
             <Banner/>
             <Categorys/>
-            <div className='pb-2'>
+            <div className='pb-1'>
                 <FeatureProducts/>
             </div>
 
-            <div className='py-10'>
-                <div className='w-full px-5 md:px-10 lg:px-22'>
+            <div className='pb-8 pt-5'>
+                <div className='w-full px-6 md:px-10 lg:px-20'>
                     <div className='grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7'>
                         
                         {/* 1. Latest Product Container */}
@@ -37,7 +38,7 @@ const Home = () => {
                     </div> 
                 </div> 
             </div>
-
+            <Footer/>
         </div>
     );
 };
