@@ -77,7 +77,6 @@ const Products = ({ title }) => {
                                             <div className='flex items-center gap-3 mt-1'>
                                                 <span className='text-lg font-bold text-[#059473]'>$434</span>
                                                 
-                                                {/* Moved Rating Here */}
                                                 <div className='flex'>
                                                     <Rating ratings={4.0} />
                                                 </div>
