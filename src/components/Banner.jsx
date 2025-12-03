@@ -49,16 +49,12 @@ const Banner = () => {
                             loop={true}
                             spaceBetween={0}
                             slidesPerView={1}
-                            autoHeight={true} /* Important: Allows slider height to adjust based on image */
+                            autoHeight={true} 
                             className="relative md:rounded-2xl overflow-hidden shadow-none md:shadow-xl group"
                         >
                             {images.map((img, index) => (
                                 <SwiperSlide key={index}>
                                     <Link to="#" className='block w-full'>
-                                        {/* Overlay (Optional) */}
-                                        {/* <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none"></div> */}
-                                        
-                                        {/* Image: No fixed height, just full width. This prevents cropping. */}
                                         <img 
                                             className="w-full h-auto block object-contain"
                                             src={`/images/banner/${img}.jpg`} 
@@ -68,7 +64,6 @@ const Banner = () => {
                                 </SwiperSlide>
                             ))}
 
-                            {/* Arrows - Only visible on Laptop/Desktop */}
                             <button className="banner-prev hidden md:flex w-10 h-10 lg:w-12 lg:h-12 bg-white/80 backdrop-blur-sm rounded-full shadow-lg justify-center items-center absolute top-1/2 -translate-y-1/2 left-4 z-10 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out hover:bg-white hover:scale-110 cursor-pointer">
                                 <FaAngleLeft size={20} className="text-gray-800" />
                             </button>

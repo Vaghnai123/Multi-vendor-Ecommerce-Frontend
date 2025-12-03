@@ -66,12 +66,7 @@ const Footer = () => {
 
                     {/* 3. RIGHT SIDE ( Join Our Shop ) */}
                     <div className='md:col-span-2 lg:col-span-1 flex flex-col gap-4 items-center lg:items-start text-center lg:text-left lg:pl-10'>
-                        
-                        {/* CHANGE: Added 'md:max-w-full'
-                            Mobile: 350px (constrained)
-                            Tablet: Full width (Text will be one line)
-                            Laptop: Full width of the column
-                        */}
+                    
                         <div className='w-full max-w-[350px] md:max-w-full lg:max-w-full'>
                             <h2 className='text-lg font-bold text-gray-800 tracking-tight drop-shadow-sm mb-4'>Join Our Shop</h2>
                             <p className='text-slate-600 text-sm mb-4'>Get Email Updates About our Latest Product and Specials Offers.</p>

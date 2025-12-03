@@ -46,7 +46,6 @@ const Products = ({ title }) => {
                 </div>
             </div>
 
-            {/* Slider Content */}
             <div className="overflow-hidden w-full relative">
                 <div
                     className="flex transition-transform duration-500 ease-in-out w-full"
@@ -74,11 +73,9 @@ const Products = ({ title }) => {
                                                 Premium Product Name {pl}
                                             </h3>
                                             
-                                            {/* CHANGE: Price and Rating in one row */}
                                             <div className='flex items-center gap-3 mt-1'>
                                                 <span className='text-lg font-bold text-[#059473]'>$434</span>
                                                 
-                                                {/* Moved Rating Here */}
                                                 <div className='flex'>
                                                     <Rating ratings={4.0} />
                                                 </div>

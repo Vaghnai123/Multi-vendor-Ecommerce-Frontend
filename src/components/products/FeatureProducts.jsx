@@ -35,8 +35,7 @@ const FeatureProducts = () => {
                                 <img 
                                     className='h-[180px] w-auto object-contain transition-transform duration-500 group-hover:scale-110 mix-blend-multiply' 
                                     src={`/images/products/${i + 1}.webp`} 
-                                    alt="Product"
-                                />
+                                    alt="Product"/>
 
                                 {/* Action Icons */}
                                 <ul className='absolute top-3 -right-10 group-hover:right-3 flex flex-col gap-2 transition-all duration-300 z-20'>
@@ -61,7 +60,6 @@ const FeatureProducts = () => {
                                     <Rating ratings={4.0} />
                                 </div>
 
-                                {/* Price and Add to Cart Button */}
                                 <div className='flex items-center justify-between'>
                                     <div className='flex flex-col'>
                                         <span className='text-lg font-extrabold text-[#059473]'>$120</span>

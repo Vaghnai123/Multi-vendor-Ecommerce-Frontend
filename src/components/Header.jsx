@@ -254,7 +254,6 @@ const Header = () => {
                             <div className='w-full'> 
                                 <div className='flex border h-[50px] items-center relative gap-2'>
                                     
-                                    {/* Select Category dropdown */}
                                     <div className='relative after:absolute after:h-[25px] after:w-px after:bg-[#afafaf] after:-right-[15px] block'> 
                                         <select onChange={(e) => setCategory(e.target.value)} className='w-[100px] sm:w-[120px] lg:w-[150px] text-slate-800 bg-transparent px-2 h-full outline-0 border-none text-sm' name="" id="">
                                             <option value="">Search Category</option>
@@ -266,7 +265,6 @@ const Header = () => {
                                     
                                     <input className='w-full relative bg-transparent text-slate-500 outline-0 px-3 h-full' onChange={(e)=> setSearchValue(e.target.value)} type="text" name='' id='' placeholder='Search here...' />
                         
-                                    {/* Search Button */}
                                     <button className='bg-[#059473] right-0 absolute px-3 sm:px-6 h-full font-semibold uppercase text-white text-sm'>Search</button>
                                 </div>
                             </div>
