@@ -54,14 +54,12 @@ const FeatureProducts = () => {
 
                             {/* Product Details Section */}
                             <div className='p-4'>
-
                                 <h3 className='font-bold text-slate-800 text-lg mt-1 mb-2 truncate hover:text-[#059473] transition-colors'> Modern Product Name </h3>
 
                                 <div className='flex items-center gap-1 mb-4'>
                                     <Rating ratings={4.0} />
                                 </div>
 
-                                {/* Price and Add to Cart Button */}
                                 <div className='flex items-center justify-between'>
                                     <div className='flex flex-col'>
                                         <span className='text-lg font-extrabold text-[#059473]'>$120</span>
