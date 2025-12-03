@@ -1,99 +1,125 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaFacebookF} from "react-icons/fa";
-import { FaTwitter } from "react-icons/fa6";
-import { FaLinkedin } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaLinkedin, FaGithub } from "react-icons/fa";
+import { AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
+import { GoLocation } from "react-icons/go";
 
 const Footer = () => {
     return (
-        <footer className='bg-[#f3f6fa]'>
-            <div className='w-[85%] flex flex-wrap mx-auto py-16 md-lg:pb-10 sm:pb-6 lg:gap-x-12'>
+        <footer className='bg-[#F3F6FA] border-t border-gray-200 mt-10'>
+            
+            <div className='w-full max-w-7xl mx-auto px-6 md:px-10 lg:px-16 py-12'>
+ 
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-8'>
 
-                {/* 1. Easy Shop Section */}
-                <div className='w-full lg:w-3/12 sm:w-full mb-8 lg:mb-0'>
-                    <div className='flex flex-col gap-4'>
-                        {/* Logo */}
-                        <img className='w-[190px] h-[70px]' src="/images/logo.png" alt="logo" />
-                        
-                        {/* Contact Info */}
-                        <ul className='flex flex-col gap-2 font-bold text-slate-700 text-sm'>
-                            <li>Address : 2504 Ivins Avenue, Egg Harbor Township</li>
-                            <li>Phone : 4343434344</li> 
-                            <li>Email : support@easylearingbd.com</li> 
+                    {/* 1. LEFT SIDE */}
+                    <div className='flex flex-col gap-5 items-center lg:items-start text-center lg:text-left'>
+                        <div className='w-40 h-[60px]'>
+                            <img className='w-full h-full object-contain' src="/images/logo.png" alt="logo" />
+                        </div>
+                        <ul className='flex flex-col gap-3 text-slate-600 text-sm font-medium'>
+                            <li className='flex flex-col lg:flex-row items-center lg:items-start gap-2'>
+                                <span className='w-8 h-8 rounded-full bg-white border border-gray-200 flex justify-center items-center text-[#059473] shrink-0 shadow-sm'>
+                                    <GoLocation size={16} />
+                                </span>
+                                <span className='mt-1'>2504 Ivins Avenue, Egg Harbor, NJ</span>
+                            </li>
+                            <li className='flex flex-col lg:flex-row items-center lg:items-start gap-2'>
+                                <span className='w-8 h-8 rounded-full bg-white border border-gray-200 flex justify-center items-center text-[#059473] shrink-0 shadow-sm'>
+                                    <AiOutlinePhone size={16} />
+                                </span>
+                                <span>+91 43434 34344</span>
+                            </li>
+                            <li className='flex flex-col lg:flex-row items-center lg:items-start gap-2'>
+                                <span className='w-8 h-8 rounded-full bg-white border border-gray-200 flex justify-center items-center text-[#059473] shrink-0 shadow-sm'>
+                                    <AiOutlineMail size={16} />
+                                </span>
+                                <span>support@easylearingbd.com</span>
+                            </li>
                         </ul> 
-                    </div> 
-                </div>
+                    </div>
 
-                {/* 2. Useful Links Section */}
-                <div className='w-full lg:w-4/12 sm:w-full mb-8 lg:mb-0'>
-                    <div className='flex justify-start'>
-                        <div className='w-full'>
-                            <h2 className='font-bold text-lg mb-4 text-gray-800'>Useful Links </h2>
-                            
-                            {/* Two internal columns for links - gap adjusted for smaller screens */}
-                            <div className='flex gap-10 md:gap-5'> 
-                                {/* First Link Column */}
-                                <ul className='w-1/2 flex flex-col gap-2 text-slate-600 text-sm font-semibold'>
-                                    <li><Link className='hover:text-[#059473]' to="#">About Us</Link></li>
-                                    <li><Link className='hover:text-[#059473]' to="#">About Our Shop</Link></li>
-                                    <li><Link className='hover:text-[#059473]' to="#">Live Chat Support</Link></li>
-                                    <li><Link className='hover:text-[#059473]' to="#">Return & Refund Policy</Link></li>
-                                    <li><Link className='hover:text-[#059473]' to="#">Blogs</Link></li>
+                    {/* 2. MIDDLE SECTION */}
+                    <div className='flex justify-center lg:justify-start items-start w-full'> 
+                        <div className='flex gap-10 md:gap-20 lg:gap-24 text-center lg:text-left'>
+                            <div className='flex flex-col items-center lg:items-start'>
+                                <h2 className='text-lg font-bold text-gray-800 tracking-tight drop-shadow-sm mb-4'>Useful Links</h2>
+                                <ul className='flex flex-col gap-2 text-slate-600 text-sm font-medium'>
+                                    <li><Link className='hover:text-[#059473] transition-colors duration-300' to="#">About Us</Link></li>
+                                    <li><Link className='hover:text-[#059473] transition-colors duration-300' to="#">About Our Shop</Link></li>
+                                    <li><Link className='hover:text-[#059473] transition-colors duration-300' to="#">Live Chat Support</Link></li>
+                                    <li><Link className='hover:text-[#059473] transition-colors duration-300' to="#">Return Policy</Link></li>
+                                    <li><Link className='hover:text-[#059473] transition-colors duration-300' to="#">Blogs</Link></li>
                                 </ul>
-
-                                {/* Second Link Column */}
-                                <ul className='w-1/2 flex flex-col gap-2 text-slate-600 text-sm font-semibold'>
-                                <li><Link className='hover:text-[#059473]' to="#">FAQ ( Frequently Asked Question )</Link></li>
-                                    <li><Link className='hover:text-[#059473]' to="#">Cancellation Policy</Link></li>
-                                    <li><Link className='hover:text-[#059473]' to="#">Contact Us</Link></li>
-                                    <li><Link className='hover:text-[#059473]' to="#">Customer Stories</Link></li>
+                            </div>
+                            <div className='flex flex-col items-center lg:items-start'>
+                                <h2 className='text-lg font-bold text-gray-800 tracking-tight drop-shadow-sm mb-4'>Quick Help</h2>
+                                <ul className='flex flex-col gap-2 text-slate-600 text-sm font-medium'>
+                                    <li><Link className='hover:text-[#059473] transition-colors duration-300' to="#">FAQ</Link></li>
+                                    <li><Link className='hover:text-[#059473] transition-colors duration-300' to="#">Cancellation Policy</Link></li>
+                                    <li><Link className='hover:text-[#059473] transition-colors duration-300' to="#">Contact Us</Link></li>
+                                    <li><Link className='hover:text-[#059473] transition-colors duration-300' to="#">Customer Stories</Link></li>
                                 </ul>
                             </div>
                         </div>
                     </div> 
-                </div>
 
-                {/* 3. Join Our Shop Section */}
-                <div className='w-full lg:w-4/12 sm:w-full'>
-                    <div className='w-full flex flex-col justify-start gap-3'>
-                        <h2 className='font-bold text-lg mb-2 text-gray-800'>Join Our Shop</h2>
-                    <span className='text-slate-700 text-sm'>Get Email Updates About our Latest Product and Shop Specials Offers.</span>
+                    {/* 3. RIGHT SIDE ( Join Our Shop ) */}
+                    <div className='md:col-span-2 lg:col-span-1 flex flex-col gap-4 items-center lg:items-start text-center lg:text-left lg:pl-10'>
                         
-                        {/* Email Input and Subscribe Button */}
-                        <div className='h-10 w-full bg-white border relative mt-1 flex'> 
-                            <input 
-                                className='h-full bg-transparent w-full px-3 outline-none text-sm border-r-0' 
-                                type="email" 
-                                placeholder='Enter Your Email' 
-                            />
-                            <button className='h-full absolute right-0 top-0 bg-[#059473] text-white uppercase px-4 font-bold text-xs shrink-0'>
-                                Subscribe
-                            </button> 
-                        </div> 
-                        
-                        {/* Social Icons */}
-                        <ul className='flex justify-start items-center gap-3 mt-4'>
-                            <li>
-                                <a className='w-[35px] h-[35px] hover:bg-[#059473] hover:text-white flex justify-center items-center bg-white rounded-full text-slate-600 border transition-colors duration-200' href="#"><FaFacebookF/> </a>
-                            </li>
-                            <li>
-                                <a className='w-[35px] h-[35px] hover:bg-[#059473] hover:text-white flex justify-center items-center bg-white rounded-full text-slate-600 border transition-colors duration-200' href="#"><FaTwitter/> </a>
-                            </li>
-                            <li>
-                                <a className='w-[35px] h-[35px] hover:bg-[#059473] hover:text-white flex justify-center items-center bg-white rounded-full text-slate-600 border transition-colors duration-200' href="#"><FaLinkedin/> </a>
-                            </li>
-                            <li>
-                                <a className='w-[35px] h-[35px] hover:bg-[#059473] hover:text-white flex justify-center items-center bg-white rounded-full text-slate-600 border transition-colors duration-200' href="#"><FaGithub/> </a>
-                            </li>
-                        </ul>
+                        {/* CHANGE: Added 'md:max-w-full'
+                            Mobile: 350px (constrained)
+                            Tablet: Full width (Text will be one line)
+                            Laptop: Full width of the column
+                        */}
+                        <div className='w-full max-w-[350px] md:max-w-full lg:max-w-full'>
+                            <h2 className='text-lg font-bold text-gray-800 tracking-tight drop-shadow-sm mb-4'>Join Our Shop</h2>
+                            <p className='text-slate-600 text-sm mb-4'>Get Email Updates About our Latest Product and Specials Offers.</p>
+                            
+                            <div className='h-[45px] w-full bg-white border border-gray-200 rounded-full relative flex shadow-sm focus-within:border-[#059473] transition-all overflow-hidden'> 
+                                <input 
+                                    className='h-full bg-transparent w-full px-4 outline-none text-sm text-slate-600 placeholder-slate-400' 
+                                    type="email" 
+                                    placeholder='Your email address' 
+                                />
+                                <button className='h-full absolute right-0 top-0 bg-[#059473] text-white uppercase px-4 font-bold text-xs tracking-wider rounded-r-full hover:bg-[#047a5e] transition-colors'>
+                                    Subscribe
+                                </button> 
+                            </div> 
+                        </div>
+
+                        <div className='mt-2'>
+                            <span className='text-sm font-bold text-slate-700 block mb-3'>Follow us on :-</span>
+                            <ul className='flex justify-center lg:justify-start items-center gap-3'>
+                                <li>
+                                    <a className='w-9 h-9 flex justify-center items-center bg-white rounded-full text-slate-600 border border-gray-200 shadow-sm hover:bg-[#059473] hover:text-white hover:border-[#059473] transition-all duration-300 hover:-translate-y-1' href="#">
+                                        <FaFacebookF size={15} /> 
+                                    </a>
+                                </li>
+                                <li>
+                                    <a className='w-9 h-9 flex justify-center items-center bg-white rounded-full text-slate-600 border border-gray-200 shadow-sm hover:bg-[#1DA1F2] hover:text-white hover:border-[#1DA1F2] transition-all duration-300 hover:-translate-y-1' href="#">
+                                        <FaTwitter size={15} /> 
+                                    </a>
+                                </li>
+                                <li>
+                                    <a className='w-9 h-9 flex justify-center items-center bg-white rounded-full text-slate-600 border border-gray-200 shadow-sm hover:bg-[#0077B5] hover:text-white hover:border-[#0077B5] transition-all duration-300 hover:-translate-y-1' href="#">
+                                        <FaLinkedin size={15} /> 
+                                    </a>
+                                </li>
+                                <li>
+                                    <a className='w-9 h-9 flex justify-center items-center bg-white rounded-full text-slate-600 border border-gray-200 shadow-sm hover:bg-[#333] hover:text-white hover:border-[#333] transition-all duration-300 hover:-translate-y-1' href="#">
+                                        <FaGithub size={15} /> 
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div> 
-                </div> 
+
+                </div>
             </div>
 
-            {/* Copyright Section */}
-            <div className='w-[90%] flex flex-wrap justify-center items-center text-slate-600 mx-auto py-5 text-center text-sm border-t'>
-                <span>Copyright @ 2025 All Rights Reserved </span>
+            <div className='w-full mx-auto py-4 text-center border-t border-gray-200 bg-white px-4'>
+                <span className='text-slate-600 text-sm'>Copyright © 2025 <span className='font-bold text-[#059473]'>EasyShop</span>. All Rights Reserved.</span>
             </div>
             
         </footer>

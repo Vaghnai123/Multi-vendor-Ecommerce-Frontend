@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { Link } from 'react-router-dom';
+import Rating from '../Rating';
 
 const Products = ({ title }) => {
-    
+
     const products = [
         [1, 2, 3],
         [4, 5, 6],
@@ -24,47 +24,69 @@ const Products = ({ title }) => {
     };
 
     return (
-        <div className='flex flex-col gap-4 w-full pl-2'>
-            <div className='flex justify-between items-center'>
-                <div className='text-xl font-bold text-slate-600'>{title}</div>
-                <div className='flex justify-center items-center gap-3 text-slate-600'>
+        <div className='w-full h-full bg-white shadow-md rounded-2xl p-6 border border-slate-100 transition-all duration-300 hover:shadow-xl'>
+            
+            {/* Header Section */}
+            <div className='flex justify-between items-center mb-6'>
+                <h2 className='text-xl font-bold text-slate-800 tracking-tight'>{title}</h2>
+                
+                <div className='flex gap-2'>
                     <button
                         onClick={prevSlide}
-                        className='w-8 h-8 flex justify-center items-center bg-slate-300 border border-slate-200 hover:bg-slate-400 transition-all cursor-pointer rounded-sm'
+                        className='w-8 h-8 flex justify-center items-center rounded-full bg-slate-50 text-slate-400 hover:bg-green-500 hover:text-white transition-all duration-300 shadow-sm border border-slate-100'
                         aria-label="Previous Slide">
-                        <IoIosArrowBack />
+                        <IoIosArrowBack size={16} />
                     </button>
                     <button
                         onClick={nextSlide}
-                        className='w-8 h-8 flex justify-center items-center bg-slate-300 border border-slate-200 hover:bg-slate-400 transition-all cursor-pointer rounded-sm'
+                        className='w-8 h-8 flex justify-center items-center rounded-full bg-slate-50 text-slate-400 hover:bg-green-500 hover:text-white transition-all duration-300 shadow-sm border border-slate-100'
                         aria-label="Next Slide">
-                        <IoIosArrowForward />
+                        <IoIosArrowForward size={16} />
                     </button>
                 </div>
             </div>
 
+            {/* Slider Content */}
             <div className="overflow-hidden w-full relative">
-                <div className="flex transition-transform duration-500 ease-in-out w-full" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+                <div
+                    className="flex transition-transform duration-500 ease-in-out w-full"
+                    style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
 
-                    {products.map((p, i) => (
+                    {products.map((group, i) => (
                         <div key={i} className="w-full shrink-0">
-                            <div className='flex flex-col justify-start gap-5'>
-                                {p.map((pl, j) => (
-                                    <Link to='#' key={j} className='flex justify-start items-start group'>
-                                    
-                                        <div className="relative w-[110px] h-[110px] overflow-hidden shrink-0">
-                                            
+                            
+                            <div className='flex flex-col gap-5'>
+                                {group.map((pl, j) => (
+                                    <div key={j} className='flex justify-start items-center gap-4 group cursor-pointer p-2 -mx-2 rounded-xl hover:bg-slate-50 transition-colors duration-300'>
+                                        
+                                        {/* Image Box */}
+                                        <div className="w-20 h-20 shrink-0 bg-white rounded-xl overflow-hidden border border-slate-100 shadow-sm relative">
                                             <img
-                                                className='w-full h-full object-contain transition-transform duration-300' 
-                                                src={`/images/products/${pl}.webp`}  
-                                                alt=""/>
+                                                className='w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-110 mix-blend-multiply'
+                                                src={`/public/images/products/${pl}.webp`} 
+                                                alt={`Product ${pl}`}
+                                            />
                                         </div>
                                         
-                                        <div className='px-3 pl-4 flex justify-start items-start gap-1 flex-col text-slate-600 flex-1 min-w-0'>
-                                            <h2 className='font-medium group-hover:text-blue-600 transition-colors line-clamp-1'>Product Name {pl}</h2>
-                                            <span className='text-lg font-bold'>$434</span>
+                                        {/* Product Info */}
+                                        <div className='flex flex-col flex-1 min-w-0 justify-center h-full'>
+                                            <h3 className='text-[15px] font-semibold text-slate-700 group-hover:text-green-600 transition-colors truncate'>
+                                                Premium Product Name {pl}
+                                            </h3>
+                                            
+                                            {/* CHANGE: Price and Rating in one row */}
+                                            <div className='flex items-center gap-3 mt-1'>
+                                                <span className='text-lg font-bold text-[#059473]'>$434</span>
+                                                
+                                                {/* Moved Rating Here */}
+                                                <div className='flex'>
+                                                    <Rating ratings={4.0} />
+                                                </div>
+                                            </div>
+
                                         </div>
-                                    </Link>
+
+                                    </div>
                                 ))}
                             </div>
                         </div>
@@ -74,5 +96,5 @@ const Products = ({ title }) => {
         </div>
     );
 };
-export default Products;
 
+export default Products;

@@ -8,36 +8,37 @@ import Footer from '../components/Footer';
 
 const Home = () => {
     return (
-        <div className='w-full'>
+        <div className='w-full bg-slate-50 min-h-screen'> {/* Added light bg to whole page so cards pop out */}
             <Header/>
             <Banner/>
             <Categorys/>
+            
             <div className='pb-1'>
                 <FeatureProducts/>
             </div>
 
-            <div className='pb-8 pt-5'>
-                <div className='w-full px-6 md:px-10 lg:px-20'>
-                    <div className='grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7'>
-                        
-                        {/* 1. Latest Product Container */}
-                        <div className='overflow-hidden bg-white p-4 rounded-md shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-lg hover:scale-[1.01] cursor-pointer'>
+            <div className='pb-10 pt-10 '>
+                <div className='w-[85%] mx-auto md:w-[90%] lg:w-[85%] max-w-7xl'>
+                    
+                    <div className='grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+                        <div className='w-full'>
                             <Products title='Latest Product' />
                         </div>
                         
-                        {/* 2. Top Rated Product Container */}
-                        <div className='overflow-hidden bg-white p-4 rounded-md shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-lg hover:scale-[1.01] cursor-pointer'>
+                        <div className='w-full'>
                             <Products title='Top Rated Product'/>
                         </div>
 
-                        {/* 3. Discount Product Container */}
-                        <div className='overflow-hidden bg-white p-4 rounded-md shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-lg hover:scale-[1.01] cursor-pointer'>
-                            <Products title='Discount Product'/>
-                        </div>
+                        <div className='w-full md:col-span-2 lg:col-span-1'>
+                            <div className='md:w-1/2 lg:w-full mx-auto'>
+                                <Products title='Discount Product'/>
+                            </div>
+                        </div>    
                         
                     </div> 
                 </div> 
             </div>
+            
             <Footer/>
         </div>
     );
