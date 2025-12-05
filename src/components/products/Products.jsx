@@ -63,7 +63,7 @@ const Products = ({ title }) => {
                                         <div className="w-20 h-20 shrink-0 bg-white rounded-xl overflow-hidden border border-slate-100 shadow-sm relative">
                                             <img
                                                 className='w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-110 mix-blend-multiply'
-                                                src={`/public/images/products/${pl}.webp`} 
+                                                src={`/images/products/${pl}.webp`} 
                                                 alt={`Product ${pl}`}
                                             />
                                         </div>
