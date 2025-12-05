@@ -43,22 +43,29 @@ const Footer = () => {
                     <div className='flex justify-center lg:justify-start items-start w-full'> 
                         <div className='flex gap-10 md:gap-20 lg:gap-24 text-center lg:text-left'>
                             <div className='flex flex-col items-center lg:items-start'>
-                                <h2 className='text-lg font-bold text-gray-800 tracking-tight drop-shadow-sm mb-4'>Useful Links</h2>
+                                
+                                <h2 className='text-lg font-bold text-slate-800 tracking-tight drop-shadow-sm mb-4'>Useful Links
+                                <span className='absolute -bottom-2 left-0 w-12 h-1 bg-[#059473] rounded-full'></span>
+                                </h2>
                                 <ul className='flex flex-col gap-2 text-slate-600 text-sm font-medium'>
-                                    <li><Link className='hover:text-[#059473] transition-colors duration-300' to="#">About Us</Link></li>
-                                    <li><Link className='hover:text-[#059473] transition-colors duration-300' to="#">About Our Shop</Link></li>
-                                    <li><Link className='hover:text-[#059473] transition-colors duration-300' to="#">Live Chat Support</Link></li>
-                                    <li><Link className='hover:text-[#059473] transition-colors duration-300' to="#">Return Policy</Link></li>
-                                    <li><Link className='hover:text-[#059473] transition-colors duration-300' to="#">Blogs</Link></li>
+                                    {/* Added: block, hover:translate-x-1, transition-all */}
+                                    <li><Link className='hover:text-[#059473] hover:translate-x-1 transition-all duration-300 block' to="#">About Us</Link></li>
+                                    <li><Link className='hover:text-[#059473] hover:translate-x-1 transition-all duration-300 block' to="#">About Our Shop</Link></li>
+                                    <li><Link className='hover:text-[#059473] hover:translate-x-1 transition-all duration-300 block' to="#">Live Chat Support</Link></li>
+                                    <li><Link className='hover:text-[#059473] hover:translate-x-1 transition-all duration-300 block' to="#">Return Policy</Link></li>
+                                    <li><Link className='hover:text-[#059473] hover:translate-x-1 transition-all duration-300 block' to="#">Blogs</Link></li>
                                 </ul>
                             </div>
                             <div className='flex flex-col items-center lg:items-start'>
-                                <h2 className='text-lg font-bold text-gray-800 tracking-tight drop-shadow-sm mb-4'>Quick Help</h2>
+                                <h2 className='text-lg font-bold text-slate-800 tracking-tight drop-shadow-sm mb-4'>Quick Help
+                                <span className='absolute -bottom-2 left-0 w-12 h-1 bg-[#059473] rounded-full'></span>
+                                </h2>
                                 <ul className='flex flex-col gap-2 text-slate-600 text-sm font-medium'>
-                                    <li><Link className='hover:text-[#059473] transition-colors duration-300' to="#">FAQ</Link></li>
-                                    <li><Link className='hover:text-[#059473] transition-colors duration-300' to="#">Cancellation Policy</Link></li>
-                                    <li><Link className='hover:text-[#059473] transition-colors duration-300' to="#">Contact Us</Link></li>
-                                    <li><Link className='hover:text-[#059473] transition-colors duration-300' to="#">Customer Stories</Link></li>
+                                    {/* Added: block, hover:translate-x-1, transition-all */}
+                                    <li><Link className='hover:text-[#059473] hover:translate-x-1 transition-all duration-300 block' to="#">FAQ</Link></li>
+                                    <li><Link className='hover:text-[#059473] hover:translate-x-1 transition-all duration-300 block' to="#">Cancellation Policy</Link></li>
+                                    <li><Link className='hover:text-[#059473] hover:translate-x-1 transition-all duration-300 block' to="#">Contact Us</Link></li>
+                                    <li><Link className='hover:text-[#059473] hover:translate-x-1 transition-all duration-300 block' to="#">Customer Stories</Link></li>
                                 </ul>
                             </div>
                         </div>
@@ -68,8 +75,8 @@ const Footer = () => {
                     <div className='md:col-span-2 lg:col-span-1 flex flex-col gap-4 items-center lg:items-start text-center lg:text-left lg:pl-10'>
                     
                         <div className='w-full max-w-[350px] md:max-w-full lg:max-w-full'>
-                            <h2 className='text-lg font-bold text-gray-800 tracking-tight drop-shadow-sm mb-4'>Join Our Shop</h2>
-                            <p className='text-slate-600 text-sm mb-4'>Get Email Updates About our Latest Product and Specials Offers.</p>
+                            <h2 className='text-lg font-bold text-slate-800 tracking-tight drop-shadow-sm mb-4'>Join Our Shop</h2>
+                            <p className='text-slate-600 font-medium text-sm mb-4'>Get Email Updates on New Products & Special offers.</p>
                             
                             <div className='h-[45px] w-full bg-white border border-gray-200 rounded-full relative flex shadow-sm focus-within:border-[#059473] transition-all overflow-hidden'> 
                                 <input 
@@ -84,7 +91,7 @@ const Footer = () => {
                         </div>
 
                         <div className='mt-2'>
-                            <span className='text-sm font-bold text-slate-700 block mb-3'>Follow us on :-</span>
+                            <span className='text-sm font-bold text-slate-800 block mb-3'>Follow us on :-</span>
                             <ul className='flex justify-center lg:justify-start items-center gap-3'>
                                 <li>
                                     <a className='w-9 h-9 flex justify-center items-center bg-white rounded-full text-slate-600 border border-gray-200 shadow-sm hover:bg-[#059473] hover:text-white hover:border-[#059473] transition-all duration-300 hover:-translate-y-1' href="#">
@@ -111,10 +118,6 @@ const Footer = () => {
                     </div> 
 
                 </div>
-            </div>
-
-            <div className='w-full mx-auto py-4 text-center border-t border-gray-200 bg-white px-4'>
-                <span className='text-slate-600 text-sm'>Copyright © 2025 <span className='font-bold text-[#059473]'>EasyShop</span>. All Rights Reserved.</span>
             </div>
             
         </footer>

@@ -24,7 +24,8 @@ const Categorys = () => {
             <div className='w-full mb-8'>
                 <div className='text-center flex justify-center items-center flex-col'>
                     <h2 className='text-2xl md:text-3xl text-slate-800 font-bold'>Top Categories</h2>
-                    <div className='w-[120px] h-1 bg-[#059473] mt-4 rounded-full'></div>
+                    
+                    <div className='w-16 h-1 bg-[#059473] mx-auto mt-4 rounded-full'></div>
                 </div>
             </div>
 

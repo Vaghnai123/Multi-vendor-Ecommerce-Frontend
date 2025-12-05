@@ -28,7 +28,7 @@ const Products = ({ title }) => {
             
             {/* Header Section */}
             <div className='flex justify-between items-center mb-6'>
-                <h2 className='text-xl font-bold text-slate-800 tracking-tight'>{title}</h2>
+                <h2 className='text-xl font-bold  text-slate-700 tracking-wider'>{title}</h2>
                 
                 <div className='flex gap-2'>
                     <button
@@ -51,7 +51,8 @@ const Products = ({ title }) => {
                     className="flex transition-transform duration-500 ease-in-out w-full"
                     style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
 
-                    {products.map((group, i) => (
+                    { products.map((group, i) => (
+
                         <div key={i} className="w-full shrink-0">
                             
                             <div className='flex flex-col gap-5'>

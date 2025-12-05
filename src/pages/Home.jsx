@@ -8,7 +8,7 @@ import Footer from '../components/Footer';
 
 const Home = () => {
     return (
-        <div className='w-full bg-slate-50 min-h-screen'> {/* Added light bg to whole page so cards pop out */}
+        <div className='w-full bg-slate-50 min-h-screen'>
             <Header/>
             <Banner/>
             <Categorys/>
@@ -18,9 +18,9 @@ const Home = () => {
             </div>
 
             <div className='pb-10 pt-10 '>
-                <div className='w-[85%] mx-auto md:w-[90%] lg:w-[85%] max-w-7xl'>
+                <div className='w-[85%] mx-auto md:w-[90%] lg:w-[85%] max-w-10xl'>
                     
-                    <div className='grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+                    <div className='grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 '>
                         <div className='w-full'>
                             <Products title='Latest Product' />
                         </div>
