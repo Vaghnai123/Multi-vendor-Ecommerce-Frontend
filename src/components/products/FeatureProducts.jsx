@@ -2,6 +2,7 @@ import React from 'react';
 import { FaEye, FaRegHeart } from "react-icons/fa";
 import { RiShoppingCartLine } from "react-icons/ri";
 import Rating from '../Rating';
+import { Link } from 'react-router-dom';
 
 const FeatureProducts = () => {
 
@@ -42,9 +43,9 @@ const FeatureProducts = () => {
                                     <li className='w-9 h-9 cursor-pointer bg-white text-slate-600 flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white transition-colors shadow-sm'>
                                         <FaRegHeart />
                                     </li>
-                                    <li className='w-9 h-9 cursor-pointer bg-white text-slate-600 flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white transition-colors shadow-sm'>
+                                    <Link to='/product/details/new' className='w-9 h-9 cursor-pointer bg-white text-slate-600 flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white transition-colors shadow-sm'>
                                         <FaEye />
-                                    </li>
+                                    </Link>
                                     <li className='w-9 h-9 cursor-pointer bg-white text-slate-600 flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white transition-colors shadow-sm'>
                                         <RiShoppingCartLine />
                                     </li>
@@ -57,6 +58,7 @@ const FeatureProducts = () => {
 
                                 <div className='flex items-center gap-1 mb-4'>
                                     <Rating ratings={4.0} />
+                                    <span className='text-slate-500 text-sm font-medium'>(4.0)</span>
                                 </div>
 
                                 <div className='flex items-center justify-between'>

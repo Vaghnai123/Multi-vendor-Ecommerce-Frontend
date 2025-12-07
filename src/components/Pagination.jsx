@@ -3,37 +3,43 @@ import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } f
 
 const Pagination = ({ pageNumber, setPageNumber, totalItem, parPage, showItem }) => {
 
-    let totalPage = Math.ceil(totalItem / parPage)
-    let startPage = pageNumber
+    let totalPage = Math.ceil(totalItem / parPage);
+    let startPage = pageNumber;
+    let dif = totalPage - pageNumber;
 
-    let dif = totalPage - pageNumber
-    if (dif <= showItem) {
-        startPage = totalPage - showItem
+    // Logic to keep the active page somewhat in the middle or end correctly
+    if (dif < showItem) {
+        startPage = totalPage - showItem + 1;
+    } else {
+        startPage = pageNumber - Math.floor(showItem / 2);
     }
-    let endPage = startPage < 0 ? showItem : showItem + startPage
 
-    if (startPage <= 0) {
-        startPage = 1
+    if (startPage < 1) {
+        startPage = 1;
     }
+
+    let endPage = startPage + showItem;
 
     const createBtn = () => {
-        const btns = []
+        const btns = [];
         for (let i = startPage; i < endPage; i++) {
-            btns.push(
-                <li 
-                    key={i} 
-                    onClick={() => setPageNumber(i)} 
-                    className={`
-                        w-[35px] h-[35px] rounded-full flex justify-center items-center cursor-pointer text-sm font-semibold transition-all duration-300 border
-                        ${pageNumber === i 
-                            ? 'bg-[#059473] text-white border-[#059473] shadow-md shadow-[#059473]/30' 
-                            : 'bg-white text-slate-600 border-slate-200 hover:bg-[#059473] hover:text-white hover:border-[#059473] hover:shadow-lg'}
-                    `}>
-                    {i}
-                </li>
-            )
+
+            if (i <= totalPage) {
+                btns.push(
+                    <li 
+                        key={i} 
+                        onClick={() => setPageNumber(i)} 
+                        className={`
+                            w-[35px] h-[35px] rounded-full flex justify-center items-center cursor-pointer text-sm font-semibold transition-all duration-300 border
+                            ${pageNumber === i 
+                                ? 'bg-[#059473] text-white border-[#059473] shadow-md shadow-[#059473]/30' 
+                                : 'bg-white text-slate-600 border-slate-200 hover:bg-[#059473] hover:text-white hover:border-[#059473] hover:shadow-lg'}`}>
+                        {i}
+                    </li>
+                );
+            }
         }
-        return btns
+        return btns;
     }
 
     return (
@@ -44,9 +50,9 @@ const Pagination = ({ pageNumber, setPageNumber, totalItem, parPage, showItem })
                     <MdOutlineKeyboardDoubleArrowLeft size={20} />
                 </li>
             }
-            {
-                createBtn()
-            }
+
+            { createBtn() }
+            
             {
                 pageNumber < totalPage && 
                 <li onClick={() => setPageNumber(pageNumber + 1)} className='w-[35px] h-[35px] rounded-full flex justify-center items-center bg-white text-slate-600 border border-slate-200 cursor-pointer hover:bg-[#059473] hover:text-white hover:border-[#059473] transition-all duration-300 shadow-sm'>

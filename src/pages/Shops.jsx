@@ -36,18 +36,18 @@ const Shops = () => {
             <Header />
             
             {/* 1. Banner Section */}
-            <section className='relative w-full h-[180px] md:h-[220px] mt-0 overflow-hidden'>              
-                <div className='absolute inset-0 bg-[url("/images/banner/shop.png")] bg-cover bg-center bg-no-repeat'></div>
-                <div className='absolute inset-0 bg-linear-to-r from-black/80 via-black/50 to-transparent backdrop-blur-[1px]'>
-                    <div className='w-[90%] md:w-[80%] h-full mx-auto flex flex-col justify-center text-white'>
-                        <h2 className='text-3xl md:text-4xl font-extrabold tracking-wide mb-2 drop-shadow-lg'>SHOP <span className='text-gray-400 font-light'>COLLECTION</span></h2>
-                        <div className='flex items-center gap-2 text-sm font-medium tracking-wider uppercase text-gray-300 pt-2'>
-                            <Link to='/' className='hover:text-white transition-colors duration-300'> Home </Link>
-                            <span className='text-gray-500 text-xs'> <IoIosArrowForward /> </span>
-                            <span className='text-white pointer-events-none'> Shop </span>
+            <section className='relative w-full h-[180px] md:h-[220px] mt-0 overflow-hidden'>
+                        <div className='absolute inset-0 bg-[url("/images/banner/shop.png")] bg-cover bg-center bg-no-repeat'></div>
+                            <div className='absolute inset-0 bg-linear-to-r from-black/80 via-black/50 to-transparent backdrop-blur-[1px]'>
+                                <div className='w-[90%] md:w-[80%] h-full mx-auto flex flex-col justify-center text-white'>
+                                    <h2 className='text-3xl md:text-4xl font-extrabold tracking-wide mb-2 drop-shadow-lg'>SHOP <span className='text-emerald-400 font-light'>PAGE</span></h2>
+                                    <div className='flex items-center gap-2 text-sm font-medium tracking-wider uppercase text-gray-300 pt-2'>
+                                        <Link to='/' className='hover:text-white transition-colors duration-300'> Home </Link>
+                                        <span className='text-gray-500 text-xs'> <IoIosArrowForward /> </span>
+                                        <span className='text-white pointer-events-none'> Shop </span>
+                                    </div>
+                                </div>
                         </div>
-                    </div>
-                </div>
             </section>
         
             {/* 2. Filter & Product Area */}
@@ -198,9 +198,9 @@ const Shops = () => {
                                     <Pagination 
                                     pageNumber={pageNumber} 
                                     setPageNumber={setPageNumber} 
-                                    totalItem={10} 
+                                    totalItem={100} 
                                     parPage={parPage} 
-                                    showItem={Math.floor(10 / 3 )} />
+                                    showItem={5} />
                                 </div>
 
                             </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { AiFillHeart, AiOutlineShoppingCart } from 'react-icons/ai';
 import { FaEye } from 'react-icons/fa';
 import Rating from '../Rating';
+import { Link } from 'react-router-dom';
 
 const ShopProducts = ({ styles }) => {
     return (
@@ -30,9 +31,9 @@ const ShopProducts = ({ styles }) => {
                                 <li className='w-9 h-9 cursor-pointer bg-white/90 backdrop-blur-sm flex justify-center items-center rounded-full text-slate-700 hover:bg-[#059473] hover:text-white transition-all shadow-sm hover:shadow-md'>
                                     <AiFillHeart size={18} />
                                 </li>
-                                <li className='w-9 h-9 cursor-pointer bg-white/90 backdrop-blur-sm flex justify-center items-center rounded-full text-slate-700 hover:bg-[#059473] hover:text-white transition-all shadow-sm hover:shadow-md'>
+                                <Link to='/product/details/new' className='w-9 h-9 cursor-pointer bg-white/90 backdrop-blur-sm flex justify-center items-center rounded-full text-slate-700 hover:bg-[#059473] hover:text-white transition-all shadow-sm hover:shadow-md'>
                                     <FaEye size={16} />
-                                </li>
+                                </Link>
                                 <li className='w-9 h-9 cursor-pointer bg-white/90 backdrop-blur-sm flex justify-center items-center rounded-full text-slate-700 hover:bg-[#059473] hover:text-white transition-all shadow-sm hover:shadow-md'>
                                     <AiOutlineShoppingCart size={18} />
                                 </li>
@@ -43,7 +44,7 @@ const ShopProducts = ({ styles }) => {
                         </div>
 
                         {/* 2. Product Content */}
-                        <div className={`flex flex-col gap-2 ${styles === 'grid' ? 'w-full p-4 pt-3' : 'flex-1 py-2 pr-4 min-w-0'}`}>
+                    <div className={`flex flex-col gap-2 ${styles === 'grid' ? 'w-full p-4 pt-3' : 'flex-1 py-2 pr-4 min-w-0'}`}>
                             
                             <h2 className='text-slate-800 font-bold text-base md:text-lg cursor-pointer transition-colors line-clamp-1 hover:text-[#059473]'>
                                 Modern Product Title {i+1}
