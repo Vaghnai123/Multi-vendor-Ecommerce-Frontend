@@ -10,7 +10,7 @@ import io from 'socket.io-client'
 import { add_friend, messageClear, send_message,updateMessage } from '../../store/reducers/chatReducer';
 import toast from 'react-hot-toast';
 
-const socket = io('https://multi-vendor-ecommerce-backend-vh2u.onrender.com')
+const socket = io("http://localhost:5000")
 
 const Chat = () => {
 
