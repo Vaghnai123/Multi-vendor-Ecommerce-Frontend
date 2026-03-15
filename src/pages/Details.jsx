@@ -1,55 +1,140 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { IoIosArrowForward } from "react-icons/io";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa"; 
 import { FaHeart, FaShoppingCart, FaFacebookF, FaTwitter, FaLinkedinIn, FaGithub, FaComments } from "react-icons/fa";
 import { FaStar } from "react-icons/fa"; 
 import Reviews from '../components/Reviews';
 import Rating from '../components/Rating'; 
-
-// Swiper Imports
+import { product_details } from '../store/reducers/homeReducer';
+import { useDispatch, useSelector } from 'react-redux';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css'; 
 import 'swiper/css/pagination';
 import 'swiper/css/navigation'; 
 import { Pagination, Autoplay, Navigation } from 'swiper/modules'; 
+import { add_to_card,messageClear,add_to_wishlist } from '../store/reducers/cardReducer';
+import toast from 'react-hot-toast';
+import { FaStore } from 'react-icons/fa';
+import { MdVerified } from 'react-icons/md';
 
 const Details = () => {
-    const images = [1, 2, 3, 4, 5, 6];
-    const [image, setImage] = useState(images[0]);
+
+    const navigate = useNavigate()
+    const {slug} = useParams()
+    const dispatch = useDispatch()
+    const {product,relatedProducts,moreProducts,totalReview} = useSelector(state => state.home)
+    const {userInfo } = useSelector(state => state.auth)
+    const { errorMessage,successMessage } = useSelector(state => state.card)
+
+    
+    useEffect(() => {
+        setImage('');
+        dispatch(product_details(slug));
+    },[slug,dispatch])
+
+    
+    useEffect(() => { 
+        if (successMessage) {
+            toast.success(successMessage)
+            dispatch(messageClear())  
+        } 
+        if (errorMessage) {
+            toast.error(errorMessage)
+            dispatch(messageClear())  
+        } 
+        
+    },[successMessage,errorMessage])
+
+    const [image, setImage] = useState('');
     const [state, setState] = useState('reviews')
-    const discount = 9;
-    const stock = 1;
+
+
+    const [quantity, setQuantity] = useState(1)
+
+    const inc = () => {
+        if (quantity >= product.stock) {
+            toast.error('Out of Stock')
+        } else {
+            setQuantity(quantity + 1)
+        }
+    }
+
+    const dec = () => {
+        if (quantity > 1) {
+            setQuantity(quantity - 1)
+        }
+    }
+
+    const add_card = () => {
+        if (userInfo) {
+           dispatch(add_to_card({
+            userId: userInfo.id,
+            quantity,
+            productId : product._id
+           }))
+        } else {
+            navigate('/login')
+        }
+    }
+
+    const add_wishlist = () => {
+        if (userInfo) {
+            dispatch(add_to_wishlist({
+                userId: userInfo.id,
+                productId: product._id,
+                name: product.name,
+                price: product.price,
+                image: product.images[0],
+                discount: product.discount,
+                rating: product.rating,
+                slug: product.slug
+            }))
+        } else {
+            navigate('/login')
+        }
+       
+    }
+
+const buy_now = () => {
+    if (!userInfo) {
+        toast.error('Please login first');
+        return navigate('/login');
+    }
+
+    const basePrice = product.price - Math.floor((product.price * product.discount) / 100);
+    const totalItemPrice = basePrice * quantity;
+
+    navigate('/shipping', {
+        state: {
+            products: [{
+                sellerId: product.sellerId,
+                shopName: product.shopName,
+                price: totalItemPrice,
+                products: [{ quantity, productInfo: product }]
+            }],
+            price: totalItemPrice, 
+            shipping_fee: totalItemPrice >= 500 ? 0 : 40,
+            items: 1
+        }
+    });
+};
 
     return (
         <div>
             <Header />
             
-            {/* --- SECTION 1 : Banner  --- */}
-            <section className='relative w-full h-[180px] md:h-[220px] mt-0 overflow-hidden'>
-                <div className='absolute inset-0 bg-[url("/images/banner/shop.png")] bg-cover bg-center bg-no-repeat'></div>
-                <div className='absolute inset-0 bg-linear-to-r from-black/80 via-black/50 to-transparent backdrop-blur-[1px]'>
-                    <div className='w-[90%] md:w-[80%] h-full mx-auto flex flex-col justify-center text-white'>
-                        <h2 className='text-3xl md:text-4xl font-extrabold tracking-wide mb-2 drop-shadow-lg'>PRODUCT <span className='text-emerald-400 font-light'> DETAILS </span></h2>
-                        <div className='flex items-center gap-2 text-sm font-medium tracking-wider uppercase text-gray-300 pt-2'>
-                            <Link to='/' className='hover:text-white transition-colors duration-300'> Home </Link>
-                            <span className='text-gray-500 text-xs'> <IoIosArrowForward /> </span>
-                            <span className='text-white pointer-events-none'> Product </span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             <section className='bg-slate-100 py-4 border-b border-gray-200'>
                 <div className='w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto'>
                     <div className='flex justify-start items-center text-sm text-slate-600 w-full font-medium'>
                         <Link to='/' className='hover:text-emerald-500 transition-colors'>Home</Link>
                         <span className='pt-1 mx-2 text-slate-400'><IoIosArrowForward /></span>
-                        <Link to='/' className='hover:text-emerald-500 transition-colors'>Category</Link>
+                        <Link to='/' className='hover:text-emerald-500 transition-colors'>{ product?.category }</Link>
                         <span className='pt-1 mx-2 text-slate-400'><IoIosArrowForward /></span>
-                        <span className='text-slate-800 font-bold truncate'>Product Name</span>
+                        <span className='text-slate-700 font-medium text-md truncate'>{ product?.name }</span>
                     </div>
                 </div>
             </section>
@@ -62,12 +147,11 @@ const Details = () => {
                         
                         {/* LEFT SIDE */}
                         <div>
-                            <div className='p-9 bg-white border border-gray-200 rounded-lg h-[400px] md:h-[500px] flex justify-center items-center shadow-sm mb-4'>
-                                <img 
-                                    className='w-full h-full object-contain' 
-                                    src={`/images/products/${image}.webp`} 
-                                    alt="Main Product" 
-                                />
+                            <div className='p-6 bg-white border border-gray-200 rounded-lg w-full aspect-square md:aspect-auto md:h-[480px] flex justify-center items-center shadow-sm mb-4 overflow-hidden'>
+                            <img 
+                                className='w-full h-full object-contain' 
+                                src={image ? image : product.images?.[0]} 
+                                alt="Main Product" />
                             </div>
 
                             <div className='relative group w-full'>
@@ -79,7 +163,7 @@ const Details = () => {
                                     <FaAngleRight size={16} className="text-gray-800" />
                                 </button>
 
-                                {images && (
+                                {product.images && (
                                     <Swiper
                                         slidesPerView={4} 
                                         spaceBetween={15}
@@ -96,7 +180,7 @@ const Details = () => {
                                             640: { slidesPerView: 4, spaceBetween: 15 },
                                             1024: { slidesPerView: 5, spaceBetween: 20 },
                                         }}>
-                                        {images.map((img, i) => {
+                                        {product.images && product.images.map((img, i) => {
                                             return (
                                                 <SwiperSlide key={i}>
                                                     <div 
@@ -104,7 +188,7 @@ const Details = () => {
                                                         className={`h-[100px] cursor-pointer bg-white border rounded-lg flex justify-center items-center p-3 transition-all duration-200 ${image === img ? 'border-emerald-500 ring-1 ring-emerald-500 opacity-100' : 'border-gray-200 opacity-80 hover:border-emerald-400'}`}>
                                                         <img 
                                                             className='w-full h-full object-contain' 
-                                                            src={`/images/products/${img}.webp`} 
+                                                            src={img}
                                                             alt="Thumbnail" 
                                                         />
                                                     </div>
@@ -120,49 +204,59 @@ const Details = () => {
                         <div className='flex flex-col gap-6 justify-start'>
                             
                             <div className='flex flex-col gap-2'>
-                                <h1 className='text-3xl font-bold text-slate-800 leading-tight'>OnePlus Nord CE 3 Lite 5G (Pastel Lime, 8GB RAM, 128GB Storage)</h1>
+                                <h1 className='text-3xl font-bold text-slate-800 leading-tight'>{product.name}</h1>
                                 <div className='flex justify-between items-center'>
                                     <div className='flex items-center gap-3'>
                                         <div className='flex items-center gap-1 bg-emerald-100 ring-1 ring-emerald-200 text-emerald-600 px-2.5 py-1 rounded text-sm font-bold'>
-                                            4.5 <FaStar size={13} />
+                                            {product.rating} <FaStar size={13} />
                                         </div>
-                                    <span className='text-slate-500 text-sm font-medium hover:text-emerald-600 cursor-pointer'> (2,540 Reviews)</span>
+                                    <span className='text-slate-500 text-sm font-medium hover:text-emerald-600 cursor-pointer'> ( {totalReview} Reviews )</span>
                                     </div>
-                                    <div className='h-[50px] w-[50px] flex justify-center items-center cursor-pointer border border-gray-200 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 hover:border-rose-200 transition-all shrink-0 '>
+                                    <div onClick={add_wishlist} className='h-[50px] w-[50px] flex justify-center items-center cursor-pointer border border-gray-200 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 hover:border-rose-200 transition-all shrink-0 '>
                                         <FaHeart size={20} />
                                     </div>
                                 </div>
                             </div>
 
                             <div className='flex items-end gap-4 pb-4 border-b border-gray-100'>
-                                {discount !== 0 ? (
+                                {product.discount !== 0 ? (
                                     <>
-                                        <h2 className='text-3xl font-extrabold text-slate-800'>${500 - Math.floor((500 * discount) / 100)}</h2>
+                                        <h2 className='text-3xl font-extrabold text-slate-800'>₹{(product?.price ? (product.price - Math.floor((product.price * product.discount) / 100)) : 0).toLocaleString('en-IN')}</h2>
                                         <div className='flex flex-col justify-end pb-1'>
-                                            <h2 className='text-lg font-medium text-slate-400 line-through'>$500</h2>
+                                            <h2 className='text-lg font-medium text-slate-500 line-through'>₹{(product?.price || 0).toLocaleString('en-IN')}</h2>
                                         </div>
                                         <div className='mb-2'>
-                                            <span className='bg-rose-100 text-rose-500 px-2 py-1 rounded text-xs font-bold'>-{discount}% OFF</span>
+                                            <span className='bg-rose-100 text-rose-500 px-2 py-1 rounded text-xs font-bold'>{product.discount}% OFF</span>
                                         </div>
                                     </>
                                 ) : (
-                                    <h2 className='text-3xl font-extrabold text-slate-800'>$200</h2>
+                                    <h2 className='text-3xl font-extrabold text-slate-800'>₹{(product?.price || 0).toLocaleString('en-IN')}</h2>
                                 )}
                             </div>
 
                             <div className='text-slate-600 font-medium text-sm leading-7'>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it.</p>
+                                <p className='line-clamp-3 pb-2'>{product.description}</p>
                             </div>  
 
+                            <div className='pb-1'>
+                                <div className='inline-flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg'>
+                                    <span className='text-slate-700 font-medium text-sm'>Shop :</span>
+                                    <span className='text-green-600 font-bold text-sm flex items-center gap-2'>
+                                        <FaStore />
+                                            {product.shopName}
+                                    </span>
+                                </div>
+                            </div>
+
                             <div className='flex gap-5 py-4 border-b border-gray-100'>
-                                {stock ? (
+                                {product.stock ? (
                                     <>
                                         <div className='flex bg-white border border-gray-200 rounded-lg h-[50px] items-center overflow-hidden'>
-                                            <div className='px-4 py-2 cursor-pointer hover:bg-gray-100 border-r border-gray-100 transition-colors font-bold text-slate-600'>-</div>
-                                            <div className='px-5 py-2 font-semibold text-slate-800'>2</div>
-                                            <div className='px-4 py-2 cursor-pointer hover:bg-gray-100 border-l border-gray-100 transition-colors font-bold text-slate-600'>+</div>
+                                            <div onClick={dec} className='px-4 py-2 cursor-pointer hover:bg-gray-100 border-r border-gray-100 transition-colors font-bold text-slate-600'>-</div>
+                                            <div className='px-5 py-2 font-semibold text-slate-800'>{quantity}</div>
+                                            <div onClick={inc} className='px-4 py-2 cursor-pointer hover:bg-gray-100 border-l border-gray-100 transition-colors font-bold text-slate-600'>+</div>
                                         </div>
-                                        <button className='flex-1 h-[50px] bg-emerald-600 text-white font-bold rounded-lg shadow-lg shadow-emerald-200 hover:bg-emerald-700 transition-all flex justify-center items-center gap-2 uppercase tracking-wide text-sm'>
+                                        <button onClick={add_card} className='flex-1 h-[50px] bg-emerald-600 text-white font-bold rounded-lg shadow-lg shadow-emerald-200 hover:bg-emerald-700 transition-all flex justify-center items-center gap-2 uppercase tracking-wide text-sm'>
                                             <FaShoppingCart /> Add To Cart
                                         </button>
                                     </>
@@ -174,12 +268,12 @@ const Details = () => {
                             </div>
 
                             <div className='flex gap-4 pt-2'>
-                                {stock ? (
-                                    <button className='flex-1 h-[50px] bg-emerald-600 text-white font-bold rounded-lg shadow-lg shadow-emerald-200 hover:bg-emerald-700 hover:shadow-emerald-300 transition-all uppercase tracking-wide text-sm'>
+                                {product.stock ? (
+                                    <button onClick={buy_now} className='flex-1 h-[50px] bg-emerald-600 text-white font-bold rounded-lg shadow-lg shadow-emerald-200 hover:bg-emerald-700 hover:shadow-emerald-300 transition-all uppercase tracking-wide text-sm'>
                                         Buy Now
                                     </button>
                                 ) : null}
-                                <Link to='#' className='flex-1 h-[50px] bg-rose-600 text-white font-bold rounded-lg shadow-lg shadow-rose-200 hover:bg-rose-700 hover:shadow-rose-300 transition-all uppercase tracking-wide text-sm flex justify-center items-center gap-2'>
+                                <Link to={`/dashboard/chat/${product.sellerId}`} className='flex-1 h-[50px] bg-rose-600 text-white font-bold rounded-lg shadow-lg shadow-rose-200 hover:bg-rose-700 hover:shadow-rose-300 transition-all uppercase tracking-wide text-sm flex justify-center items-center gap-2'>
                                    <FaComments /> Chat Seller 
                                 </Link>
                             </div>
@@ -187,8 +281,8 @@ const Details = () => {
                             <div className='flex flex-col gap-3 pt-4'>
                                 <div className='flex items-center gap-2 text-sm text-slate-700'>
                                     <span className='font-bold'>Availability :</span>
-                                    <span className={`font-bold ${stock ? 'text-emerald-600' : 'text-red-500'}`}>
-                                        {stock ? `In Stock (${stock})` : 'Out Of Stock'}
+                                    <span className={`font-bold ${product.stock ? 'text-emerald-600' : 'text-red-500'}`}>
+                                        {product.stock ? `In Stock ( ${product.stock} )` : 'Out Of Stock'}
                                     </span>
                                 </div>
                                 <div className='flex items-center gap-3 mt-1'>
@@ -220,13 +314,10 @@ const Details = () => {
                                 </div>
                                 <div className='bg-white p-6 md:p-8 rounded-xl border border-gray-100 shadow-sm'>
                                     {
-                                        state === 'reviews' ? <Reviews/> : 
+                                        state === 'reviews' ? <Reviews product={product} /> : 
                                         <div className='text-slate-600 font-medium leading-8 tracking-wide text-sm'>
                                             <p className='mb-4'>
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                            </p>
-                                            <p>
-                                                It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                                {product.description}
                                             </p>
                                         </div>
                                     }
@@ -238,22 +329,69 @@ const Details = () => {
                         <div className='w-full lg:w-[28%]'>
                             <div className='pl-0 lg:pl-4 mt-8 lg:mt-0'>
                                 <div className='bg-white rounded-xl shadow-sm p-5 border border-gray-100'>
-                                    <h2 className='text-slate-800 font-bold text-lg mb-6 relative pl-3 before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-6 before:w-1 before:bg-emerald-600 before:rounded-full'>From Easy Shop</h2>
-                                    <div className='flex flex-col gap-6'>
-                                        {[1, 2, 3].map((p, i) => (
-                                            <Link key={i} className='group block'>
-                                                <div className='relative w-full h-[220px] bg-white rounded-xl border border-gray-100 mb-3 p-4 flex justify-center items-center shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md'>
-                                                    <img className='w-full h-full object-contain transition-transform duration-500 group-hover:scale-110' src={`/images/products/${p}.webp`} alt="Related Product" />
-                                                    {discount !== 0 && (<div className='absolute top-2 left-2 bg-rose-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-md z-10'>-{discount}%</div>)}
+                                    
+                                    {/* --- Shop name --- */}
+                                    <div className='flex items-center gap-3 py-3 border-b border-slate-100 mb-3'>
+                                        <div className='w-10 h-10 bg-green-50 rounded-full flex justify-center items-center text-green-600'>
+                                            <FaStore size={20} />
+                                        </div>
+                                        <div className='flex flex-col'>
+                                                <div className='flex items-center gap-2'>
+                                                    <span className='text-slate-800 font-bold text-base'>Sold By {product.shopName}</span>
+                                                    <MdVerified className='text-blue-500' title="Verified Seller" />
                                                 </div>
-                                                <div className='flex flex-col gap-1'>
-                                                    <h2 className='text-slate-700 font-bold text-base group-hover:text-emerald-600 transition-colors line-clamp-1'>Product Name Here</h2>
-                                                    <div className='flex items-center gap-2'><Rating ratings={4.5} /> <span className='text-slate-500 text-xs'>(10)</span></div>
-                                                    <div className='flex items-baseline gap-2 mt-1'><h2 className='text-lg font-bold text-slate-800'>$434</h2><span className='text-sm text-gray-400 line-through'>$500</span></div>
+                                            </div>
+                                        </div>
+
+                                    {/*-- Product Container --*/}
+                                    <div className='flex flex-col gap-4 pt-3'>
+                                        { moreProducts.map((p, i) => {
+                                            const discountedPrice = p.price - Math.floor((p.price * p.discount) / 100);
+                                        return (
+                                            <Link to={`/product/details/${p.slug}`} key={i} className='group block'>
+                                                <div className='bg-white rounded-xl border border-slate-100 p-3 shadow-sm hover:shadow-md transition-all duration-300'>
+                    
+                                            {/* Image Section */}
+                                            <div className='relative w-full h-[220px] rounded-lg bg-slate-50 flex justify-center items-center mb-3 overflow-hidden'>
+                                                <img 
+                                                    className='w-full h-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-110' 
+                                                    src={p.images?.[0]} 
+                                                    alt={p.name} />
+
+                                                {p.discount > 0 && (
+                                                    <div className='absolute top-2 left-2 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm'> -{p.discount}% </div>
+                                                    )}
+                                            </div>
+
+                                            {/* Content Section */}
+                                            <div className='flex flex-col gap-2'>
+
+                                                <h2 className='text-slate-800 font-bold text-base group-hover:text-green-600 transition-colors line-clamp-1'>
+                                                {p.name}
+                                                </h2>
+
+                                                <div className='flex items-center gap-2'>
+                                                    <div className='flex text-yellow-400 text-sm'>
+                                                        <Rating ratings={p.rating} />
+                                                    </div>
+                                                    <span className='text-slate-400 text-xs font-semibold'>( {p.rating} / 5 Rating ) </span>
                                                 </div>
-                                            </Link>
-                                        ))}
-                                    </div>
+
+                                                <div className='flex items-baseline gap-2 mt-1'>
+                                                    <h2 className='text-lg font-bold text-slate-800'>
+                                                        ₹{discountedPrice.toLocaleString('en-IN')}
+                                                    </h2>
+                                                    <span className='text-sm text-slate-400 font-medium line-through decoration-slate-400'>
+                                                        ₹{p.price.toLocaleString('en-IN')}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                    )   
+                                })}
+                            </div>
+
                                 </div>
                             </div>
                         </div>
@@ -283,7 +421,7 @@ const Details = () => {
                             pagination={{ clickable: true, el: '.custom_bullet' }}
                             modules={[Pagination, Autoplay]}
                             className='mySwiper pb-10' > 
-                            {[1, 2, 3, 4, 5, 6].map((p, i) => {
+                            {relatedProducts.map((p, i) => {
                                 return (
                                     <SwiperSlide key={i}>
                                         <Link className='block group bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 overflow-hidden p-4'>
@@ -291,28 +429,30 @@ const Details = () => {
                                             <div className='relative h-[200px] w-full flex justify-center items-center mb-3'>
                                                 <img 
                                                     className='w-full h-full object-contain transition-transform duration-500 group-hover:scale-110' 
-                                                    src={`/images/products/${p}.webp`} 
+                                                    src={p.images[0] } 
                                                     alt="Product" />
 
-                                                {discount !== 0 && (
+                                                {p.discount !== 0 && (
                                                     <div className='absolute top-0 left-0 bg-rose-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-sm z-10'>
-                                                        -{discount}%
+                                                        -{p.discount}%
                                                     </div>
                                                 )}
                                             </div>
 
                                             <div className='flex flex-col gap-1'>
+                                            <Link to={`/product/details/${p.slug}`}>
                                                 <h2 className='text-slate-700 font-bold text-base group-hover:text-emerald-600 transition-colors line-clamp-1'>
-                                                    Product Name Here
+                                                    {p.name}
                                                 </h2>
+                                            </Link>
                                                 <div className='flex items-center gap-2'>
-                                                    <Rating ratings={4.5} />
-                                                    <span className='text-slate-400 text-xs'>(12)</span>
+                                                    <Rating ratings={p.rating} />
+                                                    <span className='text-slate-500 text-sm font-medium'>( {p.rating} / 5 Rating )</span>
                                                 </div>
 
                                                 <div className='flex items-baseline gap-2 mt-2'>
-                                                    <h2 className='text-lg font-bold text-emerald-600'>$434</h2>
-                                                    <span className='text-sm text-gray-400 line-through'>$500</span>
+                                                    <h2 className='text-lg font-bold text-slate-800'>₹{(p.price - Math.floor((p.price * p.discount) / 100)).toLocaleString('en-IN')}</h2>
+                                                    <span className='text-md text-slate-500 font-medium  line-through'>₹{p.price.toLocaleString('en-IN')}</span>
                                                 </div>
                                             </div>
                                         </Link>

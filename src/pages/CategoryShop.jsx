@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState , useEffect  } from 'react';
 import Header from '../components/Header';
-import { Link } from 'react-router-dom';
+import { Link , useSearchParams} from 'react-router-dom';
 import { IoIosArrowForward } from "react-icons/io";
 import { FaFilter, FaAngleDown, FaThList } from "react-icons/fa";
 import { AiFillStar } from 'react-icons/ai';
@@ -13,15 +14,19 @@ import ShopProducts from '../components/products/ShopProducts';
 import Pagination from '../components/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { price_range_product, query_products } from '../store/reducers/homeReducer';
+
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
-const Shops = () => {
+const CategoryShop = () => {
 
     const {products,categorys,priceRange,totalProduct,parPage} = useSelector(state => state.home)
 
-    const dispatch = useDispatch()
+    let [searchParams, setSearchParams] = useSearchParams()
+    const category = searchParams.get('category')
+    console.log(category)
 
+    const dispatch = useDispatch()
     useEffect(() => {
         dispatch(price_range_product())
     },[])
@@ -33,15 +38,7 @@ const Shops = () => {
     const [pageNumber, setPageNumber] = useState(1)
 
     const [sortPrice, setSortPrice] = useState('')
-    const [category, setCategory] = useState('')
  
-    const queryCategory = (e, value) => {
-        if (e.target.checked) {
-            setCategory(value)
-        } else {
-            setCategory('')
-        }
-    }
 
     useEffect(() => { 
         if(priceRange.high > 0) {
@@ -54,8 +51,8 @@ const Shops = () => {
 useEffect(() => { 
         dispatch(
             query_products({
-                low: state.values[0], 
-                high: state.values[1],
+                low: state.values[0] || '', 
+                high: state.values[1] || '',
                 category,
                 rating,
                 sortPrice,
@@ -81,41 +78,6 @@ useEffect(() => {
     return (
         <div className="font-sans bg-gray-50 w-full overflow-x-hidden">
             <Header />
-            
-            {/* 1. Banner Section */}
-           <section className='relative w-full h-[260px] md:h-[300px] overflow-hidden bg-slate-900'>
-           
-            <div className='absolute inset-0'>
-                <div 
-                    className='w-full h-full bg-[url("/images/banner/shop.png")] bg-cover bg-center opacity-60 scale-105 hover:scale-110 transition-transform duration-[2s] ease-in-out'></div>
-
-            <div className='absolute inset-0 bg-linear-to-r from-[#0f172a] via-[#0f172a]/90 to-transparent'></div>
-                <div className='absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#059473]/30 blur-[120px] rounded-full pointer-events-none'></div>
-            </div>
-
-            <div className='relative z-10 w-[90%] md:w-[80%] h-full mx-auto flex flex-col justify-center items-start'>
-                <div className='flex items-center gap-3 mb-4'>
-                    <div className='w-12 h-0.5 bg-[#059473]'></div>
-                    <span className='text-emerald-400 font-bold tracking-[0.3em] text-xs uppercase'>
-                        Premium Collection
-                    </span>
-                </div>
-                
-                <h2 className='text-4xl uppercase md:text-6xl font-black text-white tracking-tight mb-6 drop-shadow-2xl'>
-                    Official <span className='text-transparent uppercase bg-clip-text bg-linear-to-r from-white to-slate-400'>Store</span>
-                </h2>
-
-                <div className='flex items-center gap-2 bg-white/5 backdrop-blur-md border border-white/10 px-6 py-2.5 rounded-full shadow-lg'>
-                    <Link to='/' className='text-slate-300 hover:text-white transition-colors duration-300 text-sm font-medium'>
-                        Home
-                    </Link>
-                    <IoIosArrowForward className='text-[#059473] text-sm' />
-                    <span className='text-white font-semibold text-sm tracking-wide'>
-                        Shop
-                    </span>
-                </div>
-            </div>
-        </section>
         
             {/* 2. Filter & Product Area */}
             <section className='py-16'>
@@ -138,31 +100,9 @@ useEffect(() => {
                             ${filter ? 'h-0 overflow-hidden opacity-0' : 'h-auto mb-6 opacity-100'} 
                             lg:h-auto lg:overflow-visible lg:opacity-100 lg:mb-0`}>
                             
-                            {/* 3. Filter Box Container */}
-                            <div className='bg-white p-6 rounded-xl shadow-sm border border-gray-200'>
-                                <h2 className='text-xl font-bold mb-4 text-slate-700 uppercase tracking-wider border-b pb-2 border-gray-100'>
-                                    Category 
-                                </h2>
-                                
-                                <div className='flex flex-col gap-2'>
-                                    {categorys.map((c,i) => (
-                                        <div key={i} className='flex justify-start items-center gap-3 py-1 cursor-pointer group'>
-                                            <input 
-                                                type="checkbox" 
-                                                id={c.name} 
-                                                checked={category === c.name ? true : false} 
-                                                onChange={(e)=>queryCategory(e,c.name)}
-                                                className='w-5 h-5 accent-indigo-600 rounded border-gray-300 focus:ring-indigo-500 cursor-pointer' />
-                                            <label 
-                                                className='text-slate-600 block cursor-pointer group-hover:text-indigo-600 transition-colors font-medium text-base' 
-                                                htmlFor={c.name}> {c.name}
-                                            </label>
-                                        </div>
-                                    ))}
-                                </div>
-
+                        <div className='bg-white p-6 rounded-xl shadow-sm border border-gray-200'>
                         {/* 4. Price Slider */}
-                        <div className='py-2 flex flex-col gap-5 pt-8'>
+                        <div className='py-2 flex flex-col gap-5 pt-2'>
                             <h2 className='text-xl font-bold mb-2 text-slate-700 uppercase tracking-wider border-b pb-2 border-gray-100'> Price   </h2>
                                 <div className='px-1'>
                                     {priceRange.high > priceRange.low && (
@@ -185,10 +125,10 @@ useEffect(() => {
 
                                 <div className='flex justify-between items-center text-slate-600 font-bold text-sm'>
                                     <span className='bg-gray-100 px-3 py-1 rounded border border-gray-200'>
-                                        ₹{Math.floor(state.values[0]).toLocaleString('en-IN')}
+                                        ${Math.floor(state.values[0])}
                                     </span>
                                     <span className='bg-gray-100 px-3 py-1 rounded border border-gray-200'>
-                                        ₹{Math.floor(state.values[1]).toLocaleString('en-IN')}
+                                        ${Math.floor(state.values[1])}
                                     </span>
                                 </div>
                             </div>
@@ -217,8 +157,7 @@ useEffect(() => {
                                         </div>
                                     </div>
                                 </div>
-                            </div> 
-
+                            </div>
                         </div>
 
                         {/* ==================== RIGHT PRODUCT GRID ==================== */}
@@ -227,7 +166,7 @@ useEffect(() => {
                                 
                                 <div className='py-4 bg-white mb-10 px-6 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0 transition-all duration-300'>
                                     
-                                    <h2 className='text-md font-bold text-slate-700'> ( {totalProduct} ) Products </h2>
+                                <h2 className='text-md font-bold text-slate-700'> ( {totalProduct} ) Products </h2>
                                     
                                     <div className='flex justify-center items-center gap-4 w-full md:w-auto'>
                                         {/* Sort Dropdown */}
@@ -284,4 +223,4 @@ useEffect(() => {
     );
 };
 
-export default Shops;
+export default CategoryShop;

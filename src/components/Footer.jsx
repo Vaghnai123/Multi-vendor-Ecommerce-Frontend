@@ -44,7 +44,7 @@ const Footer = () => {
                         <div className='flex gap-10 md:gap-20 lg:gap-24 text-center lg:text-left'>
                             <div className='flex flex-col items-center lg:items-start'>
                                 
-                                <h2 className='text-lg font-bold text-slate-800 tracking-tight drop-shadow-sm mb-4'>Useful Links
+                                <h2 className='text-lg font-bold text-slate-800 drop-shadow-sm mb-4'>Useful Links
                                 <span className='absolute -bottom-2 left-0 w-12 h-1 bg-[#059473] rounded-full'></span>
                                 </h2>
                                 <ul className='flex flex-col gap-2 text-slate-600 text-sm font-medium'>
@@ -57,7 +57,7 @@ const Footer = () => {
                                 </ul>
                             </div>
                             <div className='flex flex-col items-center lg:items-start'>
-                                <h2 className='text-lg font-bold text-slate-800 tracking-tight drop-shadow-sm mb-4'>Quick Help
+                                <h2 className='text-lg font-bold text-slate-800 drop-shadow-sm mb-4'>Quick Help
                                 <span className='absolute -bottom-2 left-0 w-12 h-1 bg-[#059473] rounded-full'></span>
                                 </h2>
                                 <ul className='flex flex-col gap-2 text-slate-600 text-sm font-medium'>
@@ -75,7 +75,7 @@ const Footer = () => {
                     <div className='md:col-span-2 lg:col-span-1 flex flex-col gap-4 items-center lg:items-start text-center lg:text-left lg:pl-10'>
                     
                         <div className='w-full max-w-[350px] md:max-w-full lg:max-w-full'>
-                            <h2 className='text-lg font-bold text-slate-800 tracking-tight drop-shadow-sm mb-4'>Join Our Shop</h2>
+                            <h2 className='text-lg font-bold text-slate-800 drop-shadow-sm mb-4'>Join Our Shop</h2>
                             <p className='text-slate-600 font-medium text-sm mb-4'>Get Email Updates on New Products & Special offers.</p>
                             
                             <div className='h-[45px] w-full bg-white border border-gray-200 rounded-full relative flex shadow-sm focus-within:border-[#059473] transition-all overflow-hidden'> 

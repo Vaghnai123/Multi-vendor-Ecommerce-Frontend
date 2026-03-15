@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { FaFacebookF, FaGoogle } from "react-icons/fa6";
 import { IoMailOutline, IoLockClosedOutline, IoArrowForward } from "react-icons/io5";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { customer_login,messageClear } from '../store/reducers/authReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
+import { HashLoader } from 'react-spinners';
 
 const Login = () => {
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const {loader,errorMessage,successMessage,userInfo } = useSelector(state => state.auth)
 
     const [state, setState] = useState({ 
         email: '',
@@ -21,21 +30,51 @@ const Login = () => {
  
     const login = (e) => {
         e.preventDefault()
-        console.log(state)
+        dispatch(customer_login(state))
     }
+
+    useEffect(() => { 
+        if (successMessage) {
+            toast.success(successMessage)
+            dispatch(messageClear())  
+        } 
+        if (errorMessage) {
+            toast.error(errorMessage)
+            dispatch(messageClear())  
+        } 
+        if (userInfo) {
+            navigate('/')
+        }
+    },[successMessage,errorMessage])
 
     return (
         <div className='flex flex-col min-h-screen bg-slate-50 font-sans'>
+        {
+                loader && (
+                    <div className='fixed inset-0 z-[999] flex justify-center items-center bg-slate-900/50 backdrop-blur-sm transition-all duration-300'>
+                        <div className='bg-white p-8 rounded-2xl shadow-2xl flex flex-col items-center gap-4 relative overflow-hidden'>
+
+                            <div className='absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#059473] to-transparent'></div>
+                            
+                            <HashLoader color='#059473' size={50} speedMultiplier={1.5} />
+                            
+                            <p className='text-slate-600 font-semibold text-sm tracking-wider animate-pulse'>
+                                Processing...
+                            </p>
+                        </div>
+                    </div>
+                )
+        }
             <Header/>     
-            <div className='grow flex justify-center items-center py-10 px-4'>
+            <div className='grow flex justify-center items-center py-5 px-4'>
                 
-                <div className='w-full max-w-8xl bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-2 border border-slate-100'>
+                <div className='w-full max-w-9xl bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-2 border border-slate-100'>
                     
                     {/* --- LEFT SIDE : FORM --- */}
                     <div className='p-10 md:p-16 flex flex-col justify-center'>
                         
                         <div className='mb-8'>
-                            <h2 className='text-3xl font-extrabold text-slate-900 tracking-tight'>Welcome Back</h2>
+                            <h2 className='text-3xl font-extrabold text-slate-900'>Welcome Back</h2>
                             <p className='text-slate-600 font-medium leading-8 tracking-wide text-sm mt-3'>
                                 Please sign in to your account to continue.
                             </p>

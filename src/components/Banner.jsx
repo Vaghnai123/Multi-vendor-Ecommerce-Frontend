@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
-
+import { useDispatch, useSelector } from 'react-redux';
+import { get_banners } from '../store/reducers/homeReducer';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 const Banner = () => {
 
-    const images = [1, 2, 3, 4, 5, 6];
+    const dispatch = useDispatch()
+    const {banners} = useSelector(state => state.home)
 
     const paginationStyles = `
         .swiper-pagination-bullet {
@@ -30,6 +32,10 @@ const Banner = () => {
             bottom: 15px !important;
         } 
     `;
+
+    useEffect(() => {
+        dispatch(get_banners())
+    },[])
 
     return (
         <div className='w-full mt-2 md:mt-6 mb-10'>
@@ -52,12 +58,12 @@ const Banner = () => {
                             autoHeight={true} 
                             className="relative md:rounded-2xl overflow-hidden shadow-none md:shadow-xl group"
                         >
-                            {images.map((img, index) => (
-                                <SwiperSlide key={index}>
-                                    <Link to="#" className='block w-full'>
+                            {banners.length > 0 && banners.map((b, i) => (
+                                <SwiperSlide key={i}>
+                                    <Link to="{`product/details/${b.link}`}" className='block w-full'>
                                         <img 
                                             className="w-full h-auto block object-contain"
-                                            src={`/images/banner/${img}.jpg`} 
+                                            src={b.banner}
                                             alt="Banner" 
                                         />
                                     </Link>

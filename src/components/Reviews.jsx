@@ -1,56 +1,24 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Rating from './Rating';
 import RatingTemp from './RatingTemp'; 
 import Pagination from './Pagination'; 
 import { Link } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa';
 import { CiStar } from 'react-icons/ci';
+import { useDispatch, useSelector } from 'react-redux';
+import { customer_review,get_reviews, messageClear, product_details } from '../store/reducers/homeReducer';
+import toast from 'react-hot-toast';
 
-const Reviews = () => { 
-    
-    const product = {
-        _id: '12345',
-        rating: 4.5,
-        slug: 'test-product'
-    };
+const Reviews = ({product}) => { 
 
-    const reviews = [
-        {
-            name: "Rahul Sharma",
-            date: "12 Oct 2024",
-            rating: 5,
-            review: "Product ki quality bahut achi hai, delivery bhi time par ho gayi. Highly recommended!"
-        },
-        {
-            name: "Priya Singh",
-            date: "10 Oct 2024",
-            rating: 4,
-            review: "Acha product hai par packaging thodi better ho sakti thi. Overall good experience."
-        },
-        {
-            name: "Vikram Malhotra",
-            date: "08 Oct 2024",
-            rating: 3,
-            review: "Thik hai, price ke hisab se okay hai. Bahut high expectation mat rakhna."
-        },
-    ];
-
-    const rating_review = [
-        { sum: 0 }, 
-        { sum: 1 }, 
-        { sum: 0 }, 
-        { sum: 2 }, 
-        { sum: 4 }, 
-        { sum: 5 } 
-    ];
-
-    const userInfo = { name: "Amit Kumar" }; 
-
+    const dispatch = useDispatch()
     const [pageNumber, setPageNumber] = useState(1);
     const [parPage, setParPage] = useState(10);
-    
-    const [rat, setRat] = useState(null); 
+    const {userInfo } = useSelector(state => state.auth)
+    const {successMessage,reviews,rating_review,totalReview } = useSelector(state => state.home)
+    const [rat, setRat] = useState(''); 
     const [re, setRe] = useState('');
 
     const review_submit = (e) => {
@@ -59,24 +27,41 @@ const Reviews = () => {
             alert("Please select a rating first!");
             return;
         }
-
-        console.log("Static Submit Triggered:", {
-            name: userInfo?.name,
+        const obj = {
+            name: userInfo.name,
             review: re,
-            rating: rat,
+            rating : rat,
             productId: product._id
-        });
-        
-        alert("Review Submitted Successfully!");
-        setRe('');
-        setRat(null); 
+        }
+        dispatch(customer_review(obj))
     }
 
-   const totalReview = 100;
+    useEffect(() => { 
+        if (successMessage) {
+            toast.success(successMessage) 
+            dispatch(get_reviews({
+                productId: product._id,
+                pageNumber
+            }))
+            dispatch(product_details(product.slug))
+            setRat('')
+            setRe('')
+            dispatch(messageClear())
+        }  
+    },[successMessage])
+
+    useEffect(() => {
+        if (product._id) {
+            dispatch(get_reviews({
+                productId: product._id,
+                pageNumber
+            }))
+        }
+    },[pageNumber,product])
+
 
     return (
         <div className='mt-8'>
-
             {/* --- Review Summary Section --- */}
             <div className='flex gap-10 md-lg:flex-col bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8'>
 
@@ -93,23 +78,21 @@ const Reviews = () => {
 
                 {/* Right: Progress Bars */}
                 <div className='flex flex-col gap-3 w-[70%] md-lg:w-full'>
-                    {[5, 4, 3, 2, 1, 0].map((star, i) => {
-                          const count = rating_review[star]?.sum || 0; 
-                          const percentage = totalReview > 0 ? Math.floor((100 * count) / totalReview) : 0;
-                          
-                          return (
-                            <div key={i} className='flex justify-start items-center gap-4'>
-                                <div className='text-md flex gap-1 w-[90px]'>
-                                    <RatingTemp rating={star} />
-                                </div>
-
-                                <div className='w-full h-3 bg-slate-100 rounded-full relative overflow-hidden'>
-                                    <div style={{ width: `${percentage}%` }} className={`h-full bg-[#Edbb0E]`}></div>
-                                </div>
-
-                                <p className='text-sm text-slate-600 w-[30px] text-right font-semibold'>{count}</p>
+                    {[5, 4, 3, 2, 1].map((star, i) => { 
+                        const ratingData = rating_review.find(r => r.rating === star);
+                            const count = ratingData ? ratingData.sum : 0;
+                                const percentage = totalReview > 0 ? Math.floor((100 * count) / totalReview) : 0;
+                return (
+                        <div key={i} className='flex justify-start items-center gap-4'>
+                            <div className='text-md flex gap-1 w-[90px]'>
+                                <RatingTemp rating={star} />
                             </div>
-                          )
+                            <div className='w-full h-3 bg-slate-100 rounded-full relative overflow-hidden'>
+                                <div style={{ width: `${percentage}%` }} className={`h-full bg-[#Edbb0E]`}></div>
+                            </div>
+                            <p className='text-sm text-slate-600 w-[30px] text-right font-semibold'>{count}</p>
+                        </div>
+                        )
                     })}
                 </div>
             </div>
@@ -129,15 +112,15 @@ const Reviews = () => {
                                         {r.name.slice(0, 2).toUpperCase()}
                                     </div>
                                     <div className='flex flex-col'>
-                                        <span className='text-slate-800 font-bold text-md'>{r.name}</span>
+                                        <span className='text-slate-600 font-medium text-sm mb-2'>{r.name}</span>
                                         <div className='flex gap-1 text-yellow-400 text-sm'>
                                             <RatingTemp rating={r.rating} />
                                         </div>
                                     </div>
                                 </div>
-                                <span className='text-slate-400 text-sm'>{r.date}</span>
+                                <span className='text-slate-600 font-medium text-sm'>{r.date}</span>
                             </div>
-                            <p className='text-slate-600 text-sm leading-6 pl-12 md:pl-0'>
+                            <p className='text-slate-600 pt-2 font-medium text-sm leading-6 pl-12 md:pl-0'>
                                 {r.review}
                             </p>
                         </div>
@@ -145,7 +128,9 @@ const Reviews = () => {
                 }
 
                 <div className='flex justify-end'>  
-                    <Pagination pageNumber={pageNumber} setPageNumber={setPageNumber} totalItem={totalReview} parPage={parPage} showItem={5} />
+                {
+                  totalReview > 5 && <Pagination pageNumber={pageNumber} setPageNumber={setPageNumber} totalItem={totalReview} parPage={parPage} showItem={Math.floor(totalReview / 3)} />
+                }
                 </div>
             </div>
 

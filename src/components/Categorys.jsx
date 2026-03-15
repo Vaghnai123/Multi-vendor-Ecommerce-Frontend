@@ -5,18 +5,11 @@ import { Autoplay, Navigation } from "swiper/modules";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
+import { useSelector } from 'react-redux';
 
 const Categorys = () => {
 
-    const categorys = [
-        'Mobiles',
-        'Laptops',
-        'Speakers',
-        'Top wear',
-        'Footwear',
-        'Watches',
-        'Home Decor',
-    ];
+    const {categorys} = useSelector(state => state.home)
 
     return (
         <div className='w-[87%] mx-auto relative my-10'>
@@ -49,21 +42,20 @@ const Categorys = () => {
                 { categorys.map((c, i) => (
                     <SwiperSlide key={i}>
                         <div className="p-1 h-full"> 
-                            <Link to='#' className='group block h-full'>
+                            <Link to={`/products?category=${c.name}`}  className='group block h-full'>
 
-                                <div className='w-full bg-white border border-slate-200 shadow-md rounded-xl flex flex-col justify-center items-center transition-all duration-300 group-hover:border-[#059473] group-hover:shadow-xl h-[220px] gap-3 p-4'>
+                                <div className='w-full bg-white border border-slate-200 shadow-md rounded-xl flex flex-col justify-center items-center transition-all duration-300 group-hover:border-[#059473] group-hover:shadow-xl h-[220px] gap-3 p-3'>
 
-                                    <div className='w-full h-[130px] p-1 bg-gray-100 rounded-xl shadow-sm flex justify-center items-center overflow-hidden relative'>
+                                    <div className='w-full h-[150px] p-1 bg-gray-100 rounded-xl shadow-sm flex justify-center items-center overflow-hidden relative'>
                                         <img 
-                                            src={`/images/products/${i + 1}.webp`}  
+                                            src={c.image} 
                                             alt={c} 
-                                            className='w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-110 mix-blend-multiply' 
-                                        />
+                                            className='w-full h-full object-contain p-1 transition-transform duration-500 group-hover:scale-110 mix-blend-multiply' />
                                     </div>
 
                                     <div className='text-center w-full'>
                                         <span className='text-slate-700 font-semibold text-sm md:text-base group-hover:text-[#059473] transition-colors line-clamp-1'>
-                                            {c}
+                                            {c.name}
                                         </span>
                                     </div>
                                 </div>
