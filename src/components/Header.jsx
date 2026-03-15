@@ -150,14 +150,14 @@ const Header = () => {
                                                             <span className='uppercase font-bold'>{userInfo.name[0]}</span>
                                                         </div>
                                                         <div className='hidden xl:flex flex-col justify-center items-start overflow-hidden'>
-                                                            <span className='text-[15px] font-semibold text-slate-700 font-sans tracking-wide'>{userInfo.name}</span>
+                                                            <span className='text-[15px] font-semibold text-slate-700 font-sans tracking-wide'>{userInfo?.name}</span>
                                                         </div>
                                                     </div>
 
                                                     {/* Dropdown Menu */}
                                                     <div className={`absolute top-[55px] right-0 bg-white shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] border border-slate-100 rounded-xl w-[220px] overflow-hidden transition-all duration-300 ease-in-out origin-top-right transform ${showUserMenu ? 'opacity-100 visible scale-100' : 'opacity-0 invisible scale-95'}`}>
                                                         <div className='p-4 border-b border-slate-50 bg-[#f8fcfb]'>
-                                                            <h4 className='font-bold text-slate-700 truncate text-base'>{userInfo.name}</h4>
+                                                            <h4 className='font-bold text-slate-700 truncate text-base'>{userInfo?.name}</h4>
                                                         </div>
                                                         <ul className='flex flex-col py-1'>
                                                             <li>
@@ -210,7 +210,7 @@ const Header = () => {
                                     <div className='flex flex-col gap-3 w-full'>
                                         <Link onClick={() => setShowSidebar(true)} className='flex cursor-pointer justify-start items-center gap-3 text-base font-medium text-slate-700 hover:text-[#059473]' to='/dashboard'>
                                             <span><FaUser /></span>
-                                            <span>{userInfo.name}</span>
+                                            <span>{userInfo?.name}</span>
                                         </Link>
                                         <button onClick={logout} className='flex cursor-pointer justify-start items-center gap-3 text-base font-medium text-red-500 hover:text-red-600'>
                                             <span><FaUserLock /></span>
